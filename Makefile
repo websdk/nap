@@ -24,7 +24,7 @@ test: build
 test-dev: build
 	@nodemon -q -x "(clear; tape $(TST) | tap-dot) || true"
 
-publish: clean build test
+release: build test
 	@npm version $(v)
 	@npm publish
 
@@ -34,4 +34,4 @@ examples: build
 clean:
 	@rm -rf $$(cat .gitignore)
 
-.PHONY: build test test-dev publish examples clean
+.PHONY: build test test-dev release examples clean
