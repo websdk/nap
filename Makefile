@@ -19,8 +19,8 @@ node_modules: package.json
 node_modules/%:
 	$(NPM)
 
-test: build
-	@tape $(TST)
+test: build $(TST)
+	@babel-node $(shell which tape) $(TST)
 
 .nyc_output: node_modules
 	@nyc $(MAKE) test
