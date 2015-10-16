@@ -1,4 +1,4 @@
-var rhumb = require('@websdk/rhumb')
+import * as rhumb from '@websdk/rhumb'
 
 var nap = { environment: {} }
   
@@ -240,4 +240,4 @@ function newWeb(){
   return web
 }
 
-module.exports = nap
+export default nap

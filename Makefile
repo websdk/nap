@@ -5,13 +5,14 @@ SRC = $(wildcard src/*.js)
 LIB = $(SRC:src/%.js=lib/%.js)
 TST = $(wildcard test/*.js) $(wildcard test/**/*.js)
 NPM = @npm install --local > /dev/null && touch node_modules
+OPT = --copy-files --source-maps --modules umd
 
 v  ?= patch
 
 build: node_modules $(LIB)
 lib/%.js: src/%.js
 	@mkdir -p $(@D)
-	@browserify $< --standalone $(@F:%.js=%) | uglifyjs -o $@
+	@babel $(OPT) $< -o $@
 
 node_modules: package.json
 	$(NPM)
