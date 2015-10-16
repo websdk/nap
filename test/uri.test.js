@@ -1,5 +1,5 @@
-var test = require('tape')
-  , nap  = require('../src/nap')
+import test from 'tape'
+import nap from '../src/nap'
 
 test('Simple URI patterns', function(t) {
   t.plan(2)

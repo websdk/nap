@@ -1,7 +1,6 @@
-var nap    = require('../src/nap')
-  , test   = require('tape')
-  , get    = require('funkis').get
-  , is     = require('funkis').is
+import nap from '../src/nap'
+import test from 'tape'
+import { get, is } from 'funkis'
 
 test('API integrity', function(t) {
   t.plan(12)

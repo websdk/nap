@@ -1,5 +1,5 @@
-var nap    = require('../src/nap')
-  , test   = require('tape')
+import test from 'tape'
+import nap from '../src/nap'
 
 test("Responding ok should yield a successful response", function(t) {
   t.plan(1)

@@ -1,7 +1,7 @@
-var test = require('tape')
-  , nap  = require('../src/nap')
-  , dom  = require('jsdom').jsdom
-  , d3   = require('d3')
+import test from 'tape'
+import nap from '../src/nap'
+import { jsdom as dom } from 'jsdom'
+import d3 from 'd3'
 
 test('Content negotiation by selector should call the correct handler', selectorSetup(function(t, node) {
   t.plan(2)
@@ -100,7 +100,7 @@ test('Content negotiation by method and media type should work', function(t) {
 
 function selectorSetup(test) {
   return function(t) {
-    node = d3.select(dom().body)
+    let node = d3.select(dom().body)
       .append('div')
       .classed('nap-tests', true)
 

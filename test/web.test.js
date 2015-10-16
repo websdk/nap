@@ -1,6 +1,6 @@
-var nap    = require('../src/nap')
-  , test   = require('tape')
-  , get    = require('funkis').get
+import test from 'tape'
+import nap from '../src/nap'
+import { get } from 'funkis'
 
 test('Web instances', function(t) {
   t.plan(1)
