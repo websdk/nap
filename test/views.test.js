@@ -1,7 +1,7 @@
-var test = require('tape')
-  , nap  = require('../src/nap')
-  , dom  = require('jsdom').jsdom
-  , d3   = require('d3')
+import test from 'tape'
+import nap from '../src/nap'
+import { jsdom as dom } from 'jsdom'
+import d3 from 'd3'
 
 test('nap.into a dom node should invoke the response body on that node', setup(function(t, node) {
   t.plan(1)
@@ -48,7 +48,7 @@ test("should do nothing if the content type is not a nap view", setup(function(t
 
 function setup(test) {
   return function(t) {
-    node = d3.select(dom().body)
+    let node = d3.select(dom().body)
       .append("div")
       .classed("nap-tests", true)
       .node()
