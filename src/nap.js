@@ -172,13 +172,19 @@ function newWeb(){
     , routes = rhumb.create()
     , middleware = []
   
-  web.resource = function(name, ptn, handler){
-    if(arguments.length == 1) return resources[name]
-
-    if(arguments.length == 2) {
+  web.resource = function(name, ptn, handler, metadata) {
+    if (arguments.length == 1) {
+      return resources[name]
+    } else if (arguments.length == 2) {
+      handler = ptn
+      ptn = name
+    } else if (arguments.length == 3 && typeof handler !== 'function') {
+      metadata = handler
       handler = ptn
       ptn = name
     }
+
+    metadata || (metadata = {})
 
     handler = wrap(handler, middleware)
 
@@ -186,19 +192,22 @@ function newWeb(){
       name : name
     , ptn : ptn
     , handler : handler
+    , metadata : metadata
     }
     
     routes.add(ptn, function(params){
       return {
         fn : handler
       , params : params
+      , metadata: metadata
       }
     })
     return web
   }
 
+  web.find = find
+
   web.req = function(path, cb){
-    
     var req = isStr(path) ? {uri: path} : path
       , cb = cb || noop
     
@@ -208,7 +217,7 @@ function newWeb(){
     req.headers || (req.headers = {})
     req.headers.accept || (req.headers.accept = "application/x.nap.view")
 
-    var match = routes.match(req.uri) || { fn : wrap(notFound, middleware) }
+    var match = find(req.uri) || { fn: wrap(notFound, middleware) }
     req.params = match.params
     match.fn.call(null, req, cb)
     return web
@@ -238,6 +247,10 @@ function newWeb(){
   }
 
   return web
+
+  function find(path) {
+    return routes.match(path)
+  }
 }
 
 module.exports = nap

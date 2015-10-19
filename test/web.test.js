@@ -85,6 +85,39 @@ test('Web resource handlers should invoke a response callback if given', functio
   })
 })
 
+test('Web should return handler, params, and metadata when finding a resource by path', function(t) {
+  t.plan(12)
+  var web  = nap.web()
+    , fn_a = function() {}
+    , fn_b = function() {}
+    , fn_c = function() {}
+    , fn_d = function() {}
+
+  web.resource('/no/metadata/no/params', fn_a)
+  var a = web.find('/no/metadata/no/params')
+  t.equal(a.fn, fn_a)
+  t.deepEqual(a.params, {})
+  t.deepEqual(a.metadata, {})
+
+  web.resource('/with/metadata/no/params', fn_b, { foo: 'bar' })
+  var b = web.find('/with/metadata/no/params')
+  t.equal(b.fn, fn_b)
+  t.deepEqual(b.params, {})
+  t.deepEqual(b.metadata, { foo: 'bar' })
+
+  web.resource('/{with}/metadata/and/{params}', fn_c, { baz: 'wibble' })
+  var c = web.find('/some/metadata/and/fun')
+  t.equal(c.fn, fn_c)
+  t.deepEqual(c.params, { with: 'some', params: 'fun' })
+  t.deepEqual(c.metadata, { baz: 'wibble' })
+
+  web.resource('named', '/also/{with}/metadata/and/{params}', fn_d, { boo: 'moo' })
+  var d = web.find('/also/some/metadata/and/fun')
+  t.equal(d.fn, fn_d)
+  t.deepEqual(d.params, { with: 'some', params: 'fun' })
+  t.deepEqual(d.metadata, { boo: 'moo' })
+})
+
 test("Web should respond with a 404 if no resource is found", function(t) {
   t.plan(1)
   var web = nap.web()
