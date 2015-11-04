@@ -1,4 +1,4 @@
-PATH  := node_modules/.bin:$(PATH)
+PATH  := $(PATH):node_modules/.bin
 SHELL := /bin/bash
 
 SRC = $(wildcard src/*.js)
