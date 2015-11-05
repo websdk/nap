@@ -1,5 +1,5 @@
-PATH  := node_modules/.bin:$(PATH)
 SHELL := /bin/bash
+PATH  := $(shell echo $${PATH//\.\/node_modules\/\.bin:/}):node_modules/.bin
 
 SRC = $(wildcard src/*.js)
 LIB = $(SRC:src/%.js=lib/%.js)
@@ -11,7 +11,7 @@ v  ?= patch
 build: node_modules $(LIB)
 lib/%.js: src/%.js
 	@mkdir -p $(@D)
-	@browserify $< --standalone $(@F:%.js=%) | uglifyjs -o $@
+	@browserify --exclude @websdk/rhumb $< --standalone $(@F:%.js=%) > $@
 
 node_modules: package.json
 	$(NPM)
