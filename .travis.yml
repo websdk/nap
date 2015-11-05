@@ -4,7 +4,6 @@ node_js:
   - "iojs"
   - "4"
 
-before_install: echo "PATH = $PATH"
 install: make clean build
 script: make test
 after_success: make coverage
