@@ -4,14 +4,15 @@ PATH  := $(shell echo $${PATH//\.\/node_modules\/\.bin:/}):node_modules/.bin
 SRC = $(wildcard src/*.js)
 LIB = $(SRC:src/%.js=lib/%.js)
 TST = $(wildcard test/*.js) $(wildcard test/**/*.js)
-NPM = @npm install --local > /dev/null && touch node_modules
+NPM = @npm install --local && touch node_modules
+OPT = --plugins transform-es2015-modules-umd --copy-files --source-maps
 
 v  ?= patch
 
 build: node_modules $(LIB)
 lib/%.js: src/%.js
 	@mkdir -p $(@D)
-	@browserify --exclude @websdk/rhumb $< --standalone $(@F:%.js=%) > $@
+	@babel $(OPT) -o $@ $<
 
 node_modules: package.json
 	$(NPM)
