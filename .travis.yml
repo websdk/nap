@@ -7,3 +7,13 @@ node_js:
 install: make clean build
 script: make test
 after_success: make coverage
+
+deploy:
+  provider: npm
+  email: marcus@stade.se
+  api_key:
+    secure: dQ72Ws2o9aVMrauYogZ3dIHVzZh78bvwbLEx1teAddfyR3pESoomZZimYu1rTXxGhbOpAG1l7QRlQVN3w8gSZ/pkzT0GJABNy3w90QKEjvPirG8EnVm6Wf9xxhqAUPPhk6L3uWIPk0X0DjotxGvIcI6klKaM3ybbfOxQz9p2GyLcrW15KbyKtHRLf+2LXpWvHGCyJmo9HzaPhy+Jh40uc+GXnuFOza29R1HnezZXCQdSlE/kGUokHwTKP6oaiqYCLXSGsy4TghUaGJcZ6J0spEm8cQF6AXYlYXLKQf2/H9glIu4a3UssxkTCIP/1ivw83xiyj1gPlNdrQpWnNrHfHJqXokqdx7iFbD5he4D5ONtpxaotpfz0DFJIw9VGP96OB6gP3raQVtt6p0YKJFMJybH1p+QlpjVpTsIBB/0Vct84IpxbASs4hkX8JZNjiVX4uQUIQnkbr19U0P32a8ofVxh50SAz1fgWQvDCxpQkzU5smswxP25M5SuaZ+HX/N16oKW1lbcw4vrSLMUndz7neLeoRk1LxBQkbeV9F+oWCRDGl4EaLQs2qc9CsEaXc0XazkJDvOIv0Zib8AS9d62CvZATdWEDfbdszi5XNndWAPv/U546CKPzxBjSc/wjoX9zg2byasazxQBoNTGhJp5Vt7FNXs/pXu8c06WTDckV+cE=
+  skip_cleanup: true
+  on:
+    tags: true
+    repo: websdk/nap
