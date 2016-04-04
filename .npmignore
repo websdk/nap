@@ -1,5 +1,1 @@
-.travis.yml
-.gitignore
-Makefile
-test
-src
+!lib
