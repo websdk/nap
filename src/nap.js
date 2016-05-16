@@ -157,7 +157,9 @@ function bySelector(){
 }
 
 function wrap(fn, stack) {
-  return stack.reduce(middleware, fn)
+  return function wrapped() {
+    stack.reduce(middleware, fn).apply(null, arguments)
+  }
 }
 
 function middleware(next, middle) {
@@ -225,7 +227,7 @@ function newWeb(){
 
   web.use = function() {
     if(!arguments.length) return web
-    middleware = toArray(arguments).reverse().concat(middleware)
+    middleware.unshift.apply(middleware, toArray(arguments).reverse())
     return web
   }
 
