@@ -245,7 +245,7 @@ function newWeb(){
         return part.input === '/' ? uri : [uri , part.input].join("/")
       }
     , ""
-    )
+    ) || '/'
   }
 
   return web
