@@ -242,10 +242,10 @@ function newWeb(){
         if(part.type == "var"){
           return [uri , params[part.input]].join("/")  
         }
-        return part.input === '/' ? uri : [uri , part.input].join("/")
+        return [uri , part.input].join("/")  
       }
     , ""
-    ) || '/'
+    )
   }
 
   return web
