@@ -12,10 +12,11 @@ test('Simple URI patterns', function(t) {
 })
 
 test('Complex URI patterns', function(t) {
-  t.plan(3)
+  t.plan(4)
   var web = nap.web().resource('demo', '/my-demo/{id}', function(){})
 
   t.equal(web.uri('demo', { id : 'foo' }), '/my-demo/foo', 'should generate a URI based on resource name and params')
   t.equal(web.uri("/my-demo/{id}", { id : "foo" }), '/my-demo/foo', 'should generate a URI based on resource path and params')
   t.equal(web.uri("/my-demo/bar", { id : "foo" }), '/my-demo/bar', 'should be non-destructive if no variable parts present')
+  t.equal(web.uri("/my-demo/{id}", { id : 'foo?bar/baz' }), '/my-demo/foo%3Fbar%2Fbaz', 'should encode params')
 })
