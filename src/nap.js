@@ -240,7 +240,7 @@ function newWeb(){
     return parts.reduce(
       function(uri, part){
         if(part.type == "var"){
-          return [uri , params[part.input]].join("/")  
+          return [uri, encodeURIComponent(params[part.input])].join("/")
         }
         return part.input === '/' ? uri : [uri , part.input].join("/")
       }
@@ -251,7 +251,14 @@ function newWeb(){
   return web
 
   function find(path) {
-    return routes.match(path)
+    var match = routes.match(path)
+
+    if(match) {
+      Object.keys(match.params).forEach(function(key) {
+        match.params[key] = decodeURIComponent(match.params[key])
+      })
+    }
+    return match
   }
 }
 

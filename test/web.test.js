@@ -84,12 +84,13 @@ test('Web resource handlers should invoke a response callback if given', functio
 })
 
 test('Web should return handler, params, and metadata when finding a resource by path', function(t) {
-  t.plan(12)
+  t.plan(15)
   var web  = nap.web()
     , fn_a = function() { t.ok(true, 'resource a handler will be called') }
     , fn_b = function() { t.ok(true, 'resource b handler will be called') }
     , fn_c = function() { t.ok(true, 'resource c handler will be called') }
     , fn_d = function() { t.ok(true, 'resource d handler will be called') }
+    , fn_e = function() { t.ok(true, 'resource e handler will be called') }
 
   web.resource('/no/metadata/no/params', fn_a)
   var a = web.find('/no/metadata/no/params')
@@ -114,6 +115,12 @@ test('Web should return handler, params, and metadata when finding a resource by
   d.fn()
   t.deepEqual(d.params, { with: 'some', params: 'fun' }, 'resource d params exists')
   t.deepEqual(d.metadata, { boo: 'moo' }, 'resource d metadata exists')
+
+  web.resource('/{with}/metadata/and/{params}', fn_e, { cat: 'dog' })
+  var e = web.find('/random%3Fchars/metadata/and/complex%2Fstuff')
+  e.fn()
+  t.deepEqual(e.params, { with: 'random?chars', params: 'complex/stuff' }, 'resource e params exists')
+  t.deepEqual(e.metadata, { cat: 'dog' }, 'resource e metadata exists')
 })
 
 test("Web should respond with a 404 if no resource is found", function(t) {
